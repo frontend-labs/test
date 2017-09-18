@@ -3,10 +3,21 @@
         header.el-row
             .container
                 el-col(:span="12")
-                    h1 jobs
+                    h1 -----
                 el-col.u-align-right(:span="12")
-                    a(href="javascript:;") Login
-                    el-button(type="primary") Publicar empleo
+                    a(href="javascript:;", @click="dialogLoginVisible = true") Login
+                    el-button(type="primary") Publicar link
+
+        el-dialog(title='Login', :visible.sync='dialogLoginVisible')
+            el-form(:model='frmLogin', label-width="120px")
+                el-form-item(label='Usuario: ')
+                    el-input(v-model='frmLogin.user')
+                el-form-item(label='Password: ')
+                    el-input(v-model='frmLogin.password', auto-complete='off', type='password')
+            span.dialog-footer(slot='footer')
+                el-button(@click='dialogLoginVisible = false') Cancelar
+                el-button(type='primary', @click='dialogLoginVisible = false') Login
+
 
         .el-row(:gutter="20")
             .container
@@ -18,10 +29,10 @@
                         )
                     - for (var i = 0; i< 10; i++)
                         .job
-                            h3.job__title Desarrollador front-end senior
-                            span.job__company Google
+                            h3.job__title lorem ipsum asdasfsdf
+                            span.job__company Nombre
                             | &nbsp; • &nbsp;
-                            span.job__type Full-time
+                            span.job__type Full
                             | &nbsp; • &nbsp;
                             span.job__location Lima
                     br
@@ -45,7 +56,7 @@
                     el-input(
                         placeholder="Ingresa una ubicación"
                         icon="search"
-                        v-model="input2"
+                        v-model="txtLocation"
                         )
 
 
@@ -57,39 +68,45 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
 
-  name: 'App',
-  methods: {
-    ...mapActions(['handleResize', 'openSidebar', 'closeSidebar'])
-  },
-  data() {
-      return {
-        checkboxGroup1: ['Full'],
-        checkboxGroup2: ['Shanghai'],
-        types: ['Full-time', 'Part-time', 'Freelance', 'Contrato'],
-        locations: ['Remoto'],
-        txtSearch: ''
-      }
-  },
-  computed: {
-    ...mapState({
-        sidebarOpened: state => {
-            return state.ui.sidebarOpened
-        },
-        obfuscatorActive: state => {
-            return state.ui.obfuscatorActive
-        },
-        title: state => {
-          return state.route.meta.title
+    name: 'App',
+    methods: {
+        ...mapActions(['handleResize', 'openSidebar', 'closeSidebar'])
+    },
+    data() {
+        return {
+            checkboxGroup1: ['Full'],
+            checkboxGroup2: ['Shanghai'],
+            types: ['Full', 'Part', 'Free', 'Con'],
+            locations: ['Rem'],
+            txtSearch: '',
+            txtLocation: '',
+            dialogLoginVisible: false,
+            frmLogin: {
+                name: '',
+                password: ''
+            }
         }
-    })
-  },
-  components: {
-    'header-component': Header,
-    'sidebar-component': Sidebar
-  },
-  created: function () {
-    window.addEventListener('resize', this.handleResize)
-  }
+    },
+    computed: {
+        ...mapState({
+            sidebarOpened: state => {
+                return state.ui.sidebarOpened
+            },
+            obfuscatorActive: state => {
+                return state.ui.obfuscatorActive
+            },
+            title: state => {
+                return state.route.meta.title
+            }
+        })
+    },
+    components: {
+        'header-component': Header,
+        'sidebar-component': Sidebar
+    },
+    created: function() {
+        window.addEventListener('resize', this.handleResize)
+    }
 }
 </script>
 
