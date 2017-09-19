@@ -1,40 +1,25 @@
 <template lang="pug">
     #app
-        header.el-row
-            .container
-                el-col(:span="12")
-                    h1 -----
-                el-col.u-align-right(:span="12")
-                    a(href="javascript:;", @click="dialogLoginVisible = true") Login
-                    el-button(type="primary") Publicar link
-
-        el-dialog(title='Login', :visible.sync='dialogLoginVisible')
-            el-form(:model='frmLogin', label-width="120px")
-                el-form-item(label='Usuario: ')
-                    el-input(v-model='frmLogin.user')
-                el-form-item(label='Password: ')
-                    el-input(v-model='frmLogin.password', auto-complete='off', type='password')
-            span.dialog-footer(slot='footer')
-                el-button(@click='dialogLoginVisible = false') Cancelar
-                el-button(type='primary', @click='dialogLoginVisible = false') Login
-
-
-        .el-row(:gutter="20")
-            .container
-                el-col(:span="18")
+        header-default
+        .container
+            el-row(:gutter="40")
+                el-col(:span="16")
                     el-input(
                         placeholder="Buscar"
                         icon="search"
                         v-model="txtSearch"
+                        size="large"
                         )
+                    br
+                    br
                     - for (var i = 0; i< 10; i++)
-                        .job
-                            h3.job__title lorem ipsum asdasfsdf
-                            span.job__company Nombre
+                        .job-item
+                            h3.job-item__title  Desarrollador (Back End/DevOps)
+                            span.job-item__company Empresa
                             | &nbsp; • &nbsp;
-                            span.job__type Full
+                            span.job-item__type Full-time
                             | &nbsp; • &nbsp;
-                            span.job__location Lima
+                            span.job-item__location Lima
                     br
                     el-pagination(
                         layout="prev, pager, next"
@@ -42,7 +27,7 @@
                         )
 
 
-                el-col(:span="6")
+                el-col(:span="8")
                     h3 Filtros
 
                     h4 Tipo
@@ -62,50 +47,30 @@
 
 </template>
 <script>
-import Header from 'components/Header'
-import Sidebar from 'components/Sidebar'
-import { mapActions, mapState } from 'vuex'
+import Header from 'components/Header/Header.vue'
 
 export default {
-
     name: 'App',
     methods: {
-        ...mapActions(['handleResize', 'openSidebar', 'closeSidebar'])
+        // ...mapActions(['handleResize', 'openSidebar', 'closeSidebar'])
     },
     data() {
         return {
             checkboxGroup1: ['Full'],
             checkboxGroup2: ['Shanghai'],
-            types: ['Full', 'Part', 'Free', 'Con'],
-            locations: ['Rem'],
+            types: ['Full-time', 'Part-time', 'Freelance', 'Contrato'],
+            locations: ['Remoto'],
             txtSearch: '',
             txtLocation: '',
-            dialogLoginVisible: false,
-            frmLogin: {
-                name: '',
-                password: ''
-            }
         }
     },
     computed: {
-        ...mapState({
-            sidebarOpened: state => {
-                return state.ui.sidebarOpened
-            },
-            obfuscatorActive: state => {
-                return state.ui.obfuscatorActive
-            },
-            title: state => {
-                return state.route.meta.title
-            }
-        })
     },
     components: {
-        'header-component': Header,
-        'sidebar-component': Sidebar
+        'header-default': Header,
     },
     created: function() {
-        window.addEventListener('resize', this.handleResize)
+        // window.addEventListener('resize', this.handleResize)
     }
 }
 </script>
@@ -114,4 +79,13 @@ export default {
 // You can import all your SCSS variables using webpack alias
 @import '~scss_vars';
 @import './style.scss';
+
+.job-item {
+    border-bottom: 1px dashed #e1e1e1;
+    padding: 15px 0;
+}
+.job-item__title {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
 </style>
