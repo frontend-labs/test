@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
   /*
   ** Headers of the page
@@ -16,7 +18,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#3B8070' },
+  loading: { color: '#00A6D1' },
   /*
   ** Build configuration
   */
@@ -33,7 +35,16 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    plugins: [
+      new webpack.LoaderOptionsPlugin({
+        stylus: {
+          default: {
+            use: [require('rupture')()]
+          }
+        }
+      })
+    ]
   },
 
   // Add element-ui in our app, see plugins/element-ui.js file

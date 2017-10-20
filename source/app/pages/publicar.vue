@@ -2,14 +2,14 @@
   .container
 
     el-form
-      h2.title Publica una oferta de empleo
+      h2.app__title Publica una oferta de empleo
 
-      h4.subtitle Categoría
+      h4.app__subtitle Categoría
       el-form-item
         el-radio(v-model="rdJobCategory", label="1") Diseño
       el-form-item
         el-radio(v-model="rdJobCategory", label="2") Desarrollo
-      h4.subtitle Tipo de empleo
+      h4.app__subtitle Tipo de empleo
       el-form-item
         el-radio(v-model="rdJobType", label="Full-time") Full-time
       el-form-item
@@ -43,29 +43,29 @@
           p.company-logo__title Logo de la empresa
           p.company-logo__text Selecciona una imagen
 
-      h4.subtitle Descripción del empleo
+      h4.app__subtitle Descripción del empleo
 
       el-form-item
-        el-checkbox(v-model="chkRedirect") Ya tengo la descripción en otro website
+        el-checkbox(v-model="chkRedirect") Redireccionar a otro website
       br
       el-form-item
-        el-input(v-if="chkRedirect" placeholder="URL al website del empleo")
+        el-input(v-if="chkRedirect" placeholder="URL al website del empleo" type="url")
 
       div(v-if="!chkRedirect")
         .quill-editor(v-model="content", v-quill:myQuillEditor="editorOptions")
 
-      h4.subtitle Vista previa en listado
+      //- h4.subtitle Vista previa en listado
 
-      .job-item
-          h3.job-item__title  {{ txtJobTitle }}
-          span.job-item__company {{ txtCompanyName }}
-          | &nbsp; • &nbsp;
-          span.job-item__type {{ rdJobType }}
-          | &nbsp; • &nbsp;
-          span.job-item__location {{ txtLocation }}
+      //- .job-item
+      //-     h3.job-item__title  {{ txtJobTitle }}
+      //-     span.job-item__company {{ txtCompanyName }}
+      //-     | &nbsp; • &nbsp;
+      //-     span.job-item__type {{ rdJobType }}
+      //-     | &nbsp; • &nbsp;
+      //-     span.job-item__location {{ txtLocation }}
 
-      el-form-item.u-align-right
-        el-button(type="primary", size="large") ¡Publicar!
+      el-form-item.u-align-right.u-mt30.u-mb30
+        el-button.btn-publish(type="primary", size="large") ¡Publicar!
       br
 </template>
 
@@ -123,10 +123,7 @@ export default {
 
 <style lang="stylus" scoped>
 @import url('https://cdn.quilljs.com/1.0.0/quill.snow.css')
-.title
-  margin-bottom 20px
-.subtitle
-  margin 20px 0 5px
+
 .el-form-item
   margin-bottom 0
 .company-logo
@@ -135,9 +132,6 @@ export default {
 .company-logo__title
   margin-top 10px
   font-weight bold
-  font-size 14px
-.company-logo__text
-  font-size 14px
 .company-logo__uploader
   margin-right 10px
   >>>
@@ -167,4 +161,8 @@ export default {
 .job-item
     border-top 1px dashed #e1e1e1
     margin 20px 0
+
+.btn-publish
+  width 100%
+  padding 14px 10px
 </style>
