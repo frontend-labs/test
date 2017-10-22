@@ -1,72 +1,76 @@
 <template lang="pug">
   .container
+      el-row.u-pb20(:gutter="40")
+        el-col(:span="16")
+          el-form
+            h2.app__title Publica una oferta de empleo
 
-    el-form
-      h2.app__title Publica una oferta de empleo
+            h4.app__subtitle Categoría
+            el-form-item
+              el-radio(v-model="rdJobCategory", label="1") Diseño
+            el-form-item
+              el-radio(v-model="rdJobCategory", label="2") Desarrollo
+            h4.app__subtitle Tipo de empleo
+            el-form-item
+              el-radio(v-model="rdJobType", label="Full-time") Full-time
+            el-form-item
+              el-radio(v-model="rdJobType", label="Part-time") Part-time
+            el-form-item
+              el-radio(v-model="rdJobType", label="Freelance") Freelance
+            el-form-item
+              el-radio(v-model="rdJobType", label="Contrato") Contrato
+            br
+            el-form-item
+              el-input(v-model="txtJobTitle", placeholder="Título del empleo")
+            br
+            el-form-item
+              el-input(v-model="txtCompanyName", placeholder="Nombre de la empresa")
+            br
+            el-form-item
+              el-input(v-model="txtLocation", placeholder="Ubicación")
 
-      h4.app__subtitle Categoría
-      el-form-item
-        el-radio(v-model="rdJobCategory", label="1") Diseño
-      el-form-item
-        el-radio(v-model="rdJobCategory", label="2") Desarrollo
-      h4.app__subtitle Tipo de empleo
-      el-form-item
-        el-radio(v-model="rdJobType", label="Full-time") Full-time
-      el-form-item
-        el-radio(v-model="rdJobType", label="Part-time") Part-time
-      el-form-item
-        el-radio(v-model="rdJobType", label="Freelance") Freelance
-      el-form-item
-        el-radio(v-model="rdJobType", label="Contrato") Contrato
-      br
-      el-form-item
-        el-input(v-model="txtJobTitle", placeholder="Título del empleo")
-      br
-      el-form-item
-        el-input(v-model="txtCompanyName", placeholder="Nombre de la empresa")
-      br
-      el-form-item
-        el-input(v-model="txtLocation", placeholder="Ubicación")
+            el-form-item
+              el-checkbox(v-model="chkRemote") Se acepta trabajo remoto
+            .company-logo
+              el-upload.company-logo__uploader(
+                action="https://jsonplaceholder.typicode.com/posts/",
+                :show-file-list="false",
+                :on-success="handleAvatarSuccess",
+                :before-upload="beforeAvatarUpload")
 
-      el-form-item
-        el-checkbox(v-model="chkRemote") Se acepta trabajo remoto
-      .company-logo
-        el-upload.company-logo__uploader(
-          action="https://jsonplaceholder.typicode.com/posts/",
-          :show-file-list="false",
-          :on-success="handleAvatarSuccess",
-          :before-upload="beforeAvatarUpload")
+                img(v-if="imageUrl" :src="imageUrl" class="avatar")
+                i(v-else class="el-icon-upload avatar-uploader-icon")
+              .company-logo__description
+                p.company-logo__title Logo de la empresa
+                p.company-logo__text Selecciona una imagen
 
-          img(v-if="imageUrl" :src="imageUrl" class="avatar")
-          i(v-else class="el-icon-upload avatar-uploader-icon")
-        .company-logo__description
-          p.company-logo__title Logo de la empresa
-          p.company-logo__text Selecciona una imagen
+            h4.app__subtitle Descripción del empleo
 
-      h4.app__subtitle Descripción del empleo
+            el-form-item
+              el-checkbox(v-model="chkRedirect") Redireccionar a otro website
+            br
+            el-form-item
+              el-input(v-if="chkRedirect" placeholder="URL al website del empleo" type="url")
 
-      el-form-item
-        el-checkbox(v-model="chkRedirect") Redireccionar a otro website
-      br
-      el-form-item
-        el-input(v-if="chkRedirect" placeholder="URL al website del empleo" type="url")
+            div(v-if="!chkRedirect")
+              .quill-editor(v-model="content", v-quill:myQuillEditor="editorOptions")
 
-      div(v-if="!chkRedirect")
-        .quill-editor(v-model="content", v-quill:myQuillEditor="editorOptions")
+            //- h4.subtitle Vista previa en listado
 
-      //- h4.subtitle Vista previa en listado
+            //- .job-item
+            //-     h3.job-item__title  {{ txtJobTitle }}
+            //-     span.job-item__company {{ txtCompanyName }}
+            //-     | &nbsp; • &nbsp;
+            //-     span.job-item__type {{ rdJobType }}
+            //-     | &nbsp; • &nbsp;
+            //-     span.job-item__location {{ txtLocation }}
 
-      //- .job-item
-      //-     h3.job-item__title  {{ txtJobTitle }}
-      //-     span.job-item__company {{ txtCompanyName }}
-      //-     | &nbsp; • &nbsp;
-      //-     span.job-item__type {{ rdJobType }}
-      //-     | &nbsp; • &nbsp;
-      //-     span.job-item__location {{ txtLocation }}
+            el-form-item.u-align-right.u-mt30.u-mb30
+              el-button.btn-publish(type="primary", size="large") ¡Publicar!
+            br
+        el-col(:span="8")
+          img(src="http://placehold.it/300x400")
 
-      el-form-item.u-align-right.u-mt30.u-mb30
-        el-button.btn-publish(type="primary", size="large") ¡Publicar!
-      br
 </template>
 
 <script>
